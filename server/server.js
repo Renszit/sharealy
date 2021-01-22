@@ -4,6 +4,9 @@ const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+// const { musixApi } = require("./musixApi");
+const { MM_KEY } = require("./secrets.json");
+const axios = require("axios");
 
 app.use(
     express.json({
@@ -29,14 +32,32 @@ app.use(function (req, res, next) {
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-
-// app.post("/api/spotify", (req, res) => {
-//     spotify
-//         .search({ type: "track", query: req.body })
-//         .then((data) => console.log(data))
-//         .catch((err) => console.log("error", err));
-// });
-
+app.post("/api/lyrics", (req, res) => {
+    var options = {
+        method: "GET",
+        url: `https://api.musixmatch.com/ws/1.1/track.search`,
+        params: {
+            format: "json",
+            q_artist: req.body.value,
+            s_artist_rating: "desc",
+            s_track_rating: "desc",
+            quorum_factor: 1,
+            apikey: MM_KEY,
+            page_size: 10,
+        },
+    };
+    axios
+        .request(options)
+        .then((response) => {
+            let arr = response.data.message.body.track_list;
+            console.log(arr);
+            res.json(arr);
+        })
+        // return response.data.message.body;
+        .catch(function (error) {
+            console.error(error);
+        });
+});
 
 app.get("/", (req, res) => {
     res.redirect("/welcome");
