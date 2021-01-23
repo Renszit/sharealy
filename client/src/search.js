@@ -1,48 +1,58 @@
 import { useState } from "react";
 import axios from "./axios";
-// import secrets from "./secrets";
-// const lyricsFinder = require("lyricsFinder");
+import { selectedArtist } from "./redux/actions";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Search() {
+    const dispatch = useDispatch();
     const [search, setSearch] = useState();
-    const [result, setResult] = useState([]);
-    // const [lyricSearch, setLyricSearch] = useState();
+    const [result, setResult] = useState();
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
             axios
-                .post("/api/lyrics", {
+                .post("/api/artist", {
                     value: search,
                 })
                 .then((response) => {
-                    setResult(response);
-                    // console.log("response api request cline", response)
+                    setResult(response.data.artist_list);
                 });
         }
     };
 
+    function handleClick(value) {
+        dispatch(selectedArtist(value));
+    }
+
     return (
         <div>
-            <h1>search:</h1>
-            <input
-                onChange={(e) => setSearch(e.target.value)}
-                type="text"
-                placeholder="search here"
-                onKeyDown={handleKeyDown}
-            ></input>
-            <h2>Results:</h2>
-            <div className="resultsContainer">
-                {result &&
-                    result.map((song, idx) => (
-                        <div className="searchResults" key={idx}>
-                            <img src={song.cover}></img>
-                            <p>artist: {song.artist}</p>
-                            <p>show me more images of this artist</p>
-
-                            <p>song: {song.track}</p>
-                            <p>show me the lyrics to this song</p>
-                        </div>
-                    ))}
+            <div className="searchContainer">
+                <h1>
+                    search for the artist you really want to share a song of
+                </h1>
+                <input
+                    onChange={(e) => setSearch(e.target.value)}
+                    type="text"
+                    placeholder="search here"
+                    onKeyDown={handleKeyDown}
+                ></input>
+                <div className="resultsContainer">
+                    {result &&
+                        result.map((track, idx) => (
+                            <div className="searchResults" key={idx}>
+                                <Link to="/albums">
+                                    <p
+                                        onClick={() =>
+                                            handleClick(track.artist.artist_id)
+                                        }
+                                    >
+                                        {track.artist.artist_name}
+                                    </p>
+                                </Link>
+                            </div>
+                        ))}
+                </div>
             </div>
         </div>
     );

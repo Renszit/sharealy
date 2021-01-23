@@ -4,7 +4,7 @@ const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
-// const { musixApi } = require("./musixApi");
+
 const { MM_KEY } = require("./secrets.json");
 const axios = require("axios");
 
@@ -32,16 +32,13 @@ app.use(function (req, res, next) {
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-app.post("/api/lyrics", (req, res) => {
+app.post("/api/artist", (req, res) => {
     var options = {
         method: "GET",
-        url: `https://api.musixmatch.com/ws/1.1/track.search`,
+        url: `https://api.musixmatch.com/ws/1.1//artist.search`,
         params: {
             format: "json",
             q_artist: req.body.value,
-            s_artist_rating: "desc",
-            s_track_rating: "desc",
-            quorum_factor: 1,
             apikey: MM_KEY,
             page_size: 10,
         },
@@ -49,9 +46,7 @@ app.post("/api/lyrics", (req, res) => {
     axios
         .request(options)
         .then((response) => {
-            let arr = response.data.message.body.track_list;
-            console.log(arr);
-            res.json(arr);
+            res.json(response.data.message.body);
         })
         // return response.data.message.body;
         .catch(function (error) {
@@ -59,8 +54,26 @@ app.post("/api/lyrics", (req, res) => {
         });
 });
 
-app.get("/", (req, res) => {
-    res.redirect("/welcome");
+app.post("/api/getArtist", (req, res) => {
+    var options = {
+        method: "GET",
+        url: `https://api.musixmatch.com/ws/1.1//artist.albums.get`,
+        params: {
+            format: "json",
+            artist_id: req.body.value,
+            s_release_date: "desc",
+            apikey: MM_KEY,
+        },
+    };
+    axios
+        .request(options)
+        .then((response) => {
+            res.json(response.data);
+        })
+        // return response.data.message.body;
+        .catch(function (error) {
+            console.error(error);
+        });
 });
 
 app.get("*", function (req, res) {
