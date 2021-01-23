@@ -1,12 +1,9 @@
 export function reducer(state = {}, action) {
-    if (action.type == "albums") {
+    if (action.type == "SONG_GET") {
         state = {
             ...state,
-            albums: action.albums,
+            lyrics: action.lyrics,
         };
-    } else if (action.type == "artist") {
-        state = { ...state, artist: action.artist };
     }
-
     return state;
 }

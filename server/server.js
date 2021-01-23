@@ -32,10 +32,10 @@ app.use(function (req, res, next) {
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-app.post("/api/artist", (req, res) => {
+app.post("/api/song", (req, res) => {
     var options = {
         method: "GET",
-        url: `https://api.musixmatch.com/ws/1.1//artist.search`,
+        url: `https://api.musixmatch.com/ws/1.1/artist.search`,
         params: {
             format: "json",
             q_artist: req.body.value,
@@ -46,6 +46,7 @@ app.post("/api/artist", (req, res) => {
     axios
         .request(options)
         .then((response) => {
+            console.log(response.data);
             res.json(response.data.message.body);
         })
         // return response.data.message.body;
@@ -54,27 +55,49 @@ app.post("/api/artist", (req, res) => {
         });
 });
 
-app.post("/api/getArtist", (req, res) => {
+app.post("/api/getSong", (req, res) => {
     var options = {
         method: "GET",
-        url: `https://api.musixmatch.com/ws/1.1//artist.albums.get`,
+        url: `https://api.musixmatch.com/ws/1.1//track.lyrics.get`,
         params: {
             format: "json",
-            artist_id: req.body.value,
-            s_release_date: "desc",
+            track_id: req.body.value,
             apikey: MM_KEY,
         },
     };
     axios
         .request(options)
         .then((response) => {
-            res.json(response.data);
+            console.log(response.data);
+            res.json(response.data.message.body);
         })
         // return response.data.message.body;
         .catch(function (error) {
-            console.error(error);
+            console.error("error in getting song lyrics ", error);
         });
 });
+
+// app.post("/api/getAlbum", (req, res) => {
+//     var options = {
+//         method: "GET",
+//         url: `https://api.musixmatch.com/ws/1.1//album.get`,
+//         params: {
+//             format: "json",
+//             album_id: req.body.value,
+//             apikey: MM_KEY,
+//         },
+//     };
+//     axios
+//         .request(options)
+//         .then((response) => {
+//             console.log(response);
+//             // res.json(response.data);
+//         })
+//         // return response.data.message.body;
+//         .catch(function (error) {
+//             console.error("error in getting artist albums ", error);
+//         });
+// });
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

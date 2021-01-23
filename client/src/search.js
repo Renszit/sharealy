@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "./axios";
-import { selectedArtist } from "./redux/actions";
+import { selectedSong } from "./redux/actions";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -12,25 +12,24 @@ export default function Search() {
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
             axios
-                .post("/api/artist", {
+                .post("/api/song", {
                     value: search,
                 })
                 .then((response) => {
+                    console.log(response.data.artist_list);
                     setResult(response.data.artist_list);
                 });
         }
     };
 
     function handleClick(value) {
-        dispatch(selectedArtist(value));
+        dispatch(selectedSong(value));
     }
 
     return (
         <div>
             <div className="searchContainer">
-                <h1>
-                    search for the artist you really want to share a song of
-                </h1>
+                <h1>first, find an artist you really like</h1>
                 <input
                     onChange={(e) => setSearch(e.target.value)}
                     type="text"
@@ -39,15 +38,17 @@ export default function Search() {
                 ></input>
                 <div className="resultsContainer">
                     {result &&
-                        result.map((track, idx) => (
+                        result.map((artist, idx) => (
                             <div className="searchResults" key={idx}>
-                                <Link to="/albums">
+                                <Link to="/lyrics">
                                     <p
                                         onClick={() =>
-                                            handleClick(track.artist.artist_id)
+                                            handleClick(
+                                                artist.artist.artist_name
+                                            )
                                         }
                                     >
-                                        {track.artist.artist_name}
+                                        {artist.artist.artist_name}
                                     </p>
                                 </Link>
                             </div>

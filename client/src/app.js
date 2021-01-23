@@ -1,6 +1,6 @@
 import Search from "./search";
 import { BrowserRouter, Route } from "react-router-dom";
-import Albums from "./albums";
+import Lyrics from "./lyrics";
 
 export default function App() {
     return (
@@ -9,10 +9,9 @@ export default function App() {
                 <header>
                     <img src="/gummy-cassette.svg"></img>
                     <h1 className="logo">sharealy.</h1>
-                    {/* <p>(as in, share-a-lyric with someone...)</p> */}
                 </header>
-                <Route path="/artist" render={() => <Search />} />
-                <Route path="/albums" render={() => <Albums />} />
+                <Route path="/" render={() => <Search />} />
+                <Route path="/lyrics" render={() => <Lyrics />} />
             </div>
         </BrowserRouter>
     );

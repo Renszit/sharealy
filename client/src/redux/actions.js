@@ -1,19 +1,12 @@
 import axios from "../axios";
 
-export async function albumsOfSelectedArtist(arrayOfAlbums) {
-    return {
-        type: "albums",
-        albums: arrayOfAlbums,
-    };
-}
-
-export async function selectedArtist(artist) {
-    const { data } = await axios.post("/api/getArtist", {
-        value: artist,
+export async function selectedSong(song) {
+    const { data } = await axios.post("/api/getSong", {
+        value: song,
     });
 
     return {
-        type: "artist",
-        albums: data,
+        type: "SONG_GET",
+        lyrics: data,
     };
 }
