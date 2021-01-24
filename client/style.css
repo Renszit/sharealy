@@ -12,14 +12,14 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    padding-top: 30px;
     height: 200px;
 }
 
 header img {
     width: 300px;
     height: 120px;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     margin-bottom: 0;
     object-fit: cover;
     transition: all 1s ease;
@@ -33,7 +33,7 @@ header img {
     font-size: 30px;
     border: none;
     border-radius: 10px;
-    text-align:center;
+    text-align: center;
 }
 
 .logo {
@@ -109,3 +109,34 @@ header img {
     margin-top: none;
 }
 
+/* COMPILER */
+.gridContainer {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.gridImage {
+    object-fit: cover;
+    width: 800px;
+    height: 400px;
+    margin: 20px;
+    /* transform: translateY(-10%); */
+    border-radius: 10px;
+    /* grid-area: 1 / 3 / 2 / 5; */
+}
+
+.gridLyrics {
+    background-color: grey;
+    /* grid-area: 1 / 5 / 2 / 6; */
+}
+
+.gridFonts {
+    background-color: grey;
+    /* grid-area: 1 / 2 / 2 / 3; */
+}
+
+.lyrics {
+    font-size: 1.5em;
+}
+/* //////// */

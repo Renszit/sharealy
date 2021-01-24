@@ -111,6 +111,26 @@ app.post("/api/song", (req, res) => {
         });
 });
 
+app.post("/api/lyrics", (req, res) => {
+    var options = {
+        method: "GET",
+        url: `https://api.musixmatch.com/ws/1.1/track.snippet.get`,
+        params: {
+            format: "json",
+            track_id: req.body.value,
+            apikey: MM_KEY,
+        },
+    };
+    axios
+        .request(options)
+        .then(function (response) {
+            res.json(response.data.message.body.snippet);
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+});
+
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
