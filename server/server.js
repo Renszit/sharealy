@@ -5,7 +5,7 @@ const path = require("path");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
 
-const { MM_KEY } = require("./secrets.json");
+const { MM_KEY, RAPID_API } = require("./secrets.json");
 const axios = require("axios");
 
 app.use(
@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-app.post("/api/song", (req, res) => {
+app.post("/api/artist", (req, res) => {
     var options = {
         method: "GET",
         url: `https://api.musixmatch.com/ws/1.1/artist.search`,
@@ -43,6 +43,7 @@ app.post("/api/song", (req, res) => {
             page_size: 10,
         },
     };
+
     axios
         .request(options)
         .then((response) => {
@@ -55,49 +56,35 @@ app.post("/api/song", (req, res) => {
         });
 });
 
-app.post("/api/getSong", (req, res) => {
+app.post("/api/images", (req, res) => {
     var options = {
         method: "GET",
-        url: `https://api.musixmatch.com/ws/1.1//track.lyrics.get`,
+        url:
+            "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI",
         params: {
-            format: "json",
-            track_id: req.body.value,
-            apikey: MM_KEY,
+            q: req.body.value,
+            pageNumber: "1",
+            pageSize: "9",
+            autoCorrect: "true",
+            safeSearch: "true",
+        },
+        headers: {
+            "x-rapidapi-key": RAPID_API,
+            "x-rapidapi-host":
+                "contextualwebsearch-websearch-v1.p.rapidapi.com",
         },
     };
+
     axios
         .request(options)
-        .then((response) => {
-            console.log(response.data);
-            res.json(response.data.message.body);
+        .then(function (response) {
+            res.json(response.data.value);
+            // console.log("THIS ONE:",response.data.value);
         })
-        // return response.data.message.body;
         .catch(function (error) {
-            console.error("error in getting song lyrics ", error);
+            console.error(error);
         });
 });
-
-// app.post("/api/getAlbum", (req, res) => {
-//     var options = {
-//         method: "GET",
-//         url: `https://api.musixmatch.com/ws/1.1//album.get`,
-//         params: {
-//             format: "json",
-//             album_id: req.body.value,
-//             apikey: MM_KEY,
-//         },
-//     };
-//     axios
-//         .request(options)
-//         .then((response) => {
-//             console.log(response);
-//             // res.json(response.data);
-//         })
-//         // return response.data.message.body;
-//         .catch(function (error) {
-//             console.error("error in getting artist albums ", error);
-//         });
-// });
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

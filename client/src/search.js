@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "./axios";
-import { selectedSong } from "./redux/actions";
+import { selectedArtist } from "./redux/actions";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -12,23 +12,23 @@ export default function Search() {
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
             axios
-                .post("/api/song", {
+                .post("/api/artist", {
                     value: search,
                 })
                 .then((response) => {
-                    console.log(response.data.artist_list);
+                    // console.log(response.data.artist_list);
                     setResult(response.data.artist_list);
                 });
         }
     };
 
     function handleClick(value) {
-        dispatch(selectedSong(value));
+        dispatch(selectedArtist(value));
     }
 
     return (
         <div>
-            <div className="searchContainer">
+            <div className="container">
                 <h1>first, find an artist you really like</h1>
                 <input
                     onChange={(e) => setSearch(e.target.value)}
@@ -36,11 +36,11 @@ export default function Search() {
                     placeholder="search here"
                     onKeyDown={handleKeyDown}
                 ></input>
-                <div className="resultsContainer">
+                <div className="container">
                     {result &&
                         result.map((artist, idx) => (
                             <div className="searchResults" key={idx}>
-                                <Link to="/lyrics">
+                                <Link to="/ok">
                                     <p
                                         onClick={() =>
                                             handleClick(

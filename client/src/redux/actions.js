@@ -1,12 +1,20 @@
-import axios from "../axios";
+// import axios from "../axios";
 
-export async function selectedSong(song) {
-    const { data } = await axios.post("/api/getSong", {
-        value: song,
-    });
+const ACTIONS = {
+    ARTIST_SET: "ARTIST_SET",
+    IMAGES: "IMAGES",
+};
 
+export async function selectedArtist(artist) {
     return {
-        type: "SONG_GET",
-        lyrics: data,
+        type: ACTIONS.ARTIST_SET,
+        artist: artist,
+    };
+}
+
+export async function sendImageToRedux(url) {
+    return {
+        type: ACTIONS.IMAGE,
+        url: url,
     };
 }
