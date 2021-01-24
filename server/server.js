@@ -64,7 +64,7 @@ app.post("/api/images", (req, res) => {
         params: {
             q: req.body.value,
             pageNumber: "1",
-            pageSize: "9",
+            pageSize: "8",
             autoCorrect: "true",
             safeSearch: "true",
         },
@@ -80,6 +80,31 @@ app.post("/api/images", (req, res) => {
         .then(function (response) {
             res.json(response.data.value);
             // console.log("THIS ONE:",response.data.value);
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+});
+
+app.post("/api/song", (req, res) => {
+    var options = {
+        method: "GET",
+        url: `https://api.musixmatch.com/ws/1.1/track.search`,
+        params: {
+            format: "json",
+            q_artist: req.body.name,
+            q_track: req.body.value,
+            apikey: MM_KEY,
+            page_size: 3,
+            s_track_rating: "desc",
+            f_has_lyrics: true,
+        },
+    };
+    axios
+        .request(options)
+        .then(function (response) {
+            res.json(response.data.message.body.track_list);
+            // console.log("THIS ONE:",response.data.message.body.track_list);
         })
         .catch(function (error) {
             console.error(error);

@@ -34,16 +34,18 @@ export default function Ok() {
         <div>
             <div className="container">
                 <div className="container">
-                    <p>Ok, so you like {artist}</p>
+                    {artist && <p>Ok, so you like {artist}</p>}
                     <p>now select a picture below you like</p>
 
                     <div className="containerHorizontal">
                         {images &&
                             images.map((url, idx) => (
                                 <div key={idx} className="singleImage">
-                                    <Link to="/songs">
+                                    <Link
+                                        onClick={() => handleImage(url.url)}
+                                        to="/songs"
+                                    >
                                         <img
-                                            onClick={handleImage(url.url)}
                                             className="images"
                                             src={url.url}
                                             onError={(e) => {

@@ -22,8 +22,8 @@ export default function Search() {
         }
     };
 
-    function handleClick(value) {
-        dispatch(selectedArtist(value));
+    function handleClick(name, id) {
+        dispatch(selectedArtist(name, id));
     }
 
     return (
@@ -33,6 +33,7 @@ export default function Search() {
                 <input
                     onChange={(e) => setSearch(e.target.value)}
                     type="text"
+                    className="inputField"
                     placeholder="search here"
                     onKeyDown={handleKeyDown}
                 ></input>
@@ -44,7 +45,8 @@ export default function Search() {
                                     <p
                                         onClick={() =>
                                             handleClick(
-                                                artist.artist.artist_name
+                                                artist.artist.artist_name,
+                                                artist.artist.artist_id
                                             )
                                         }
                                     >
