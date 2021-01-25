@@ -22,7 +22,7 @@ export default function Share() {
 
     return (
         <div>
-            <p>share buttons</p>
+            <p>Nice, now share this song with your pals!</p>
             <div className="socialButtons">
                 <EmailShareButton url="aws" />
                 <FacebookShareButton />

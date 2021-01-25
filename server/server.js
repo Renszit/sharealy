@@ -33,7 +33,12 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.post("/imageToSql", (req, res) => {
-    db.imageToSql(req.body.url, req.body.lyrics, req.body.fonts)
+    db.imageToSql(
+        req.body.url,
+        req.body.lyrics,
+        req.body.artist,
+        req.body.fonts
+    )
         .then(({ rows }) => {
             const { id } = rows[0];
             res.json({
@@ -44,10 +49,13 @@ app.post("/imageToSql", (req, res) => {
         .catch((err) => console.log("error in posting to sql", err));
 });
 
-app.get("/shared/:id", (req, res) => {
-    db.getSqlImage(req.param.id)
+app.get("/app/shared/:id", (req, res) => {
+    console.log("params id:", req.params.id);
+    db.getSqlImage(req.params.id)
         .then(({ rows }) => {
+            // console.log(result);
             const { url, lyrics, artist, fonts } = rows[0];
+
             res.json({
                 url: url,
                 lyrics: lyrics,

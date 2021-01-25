@@ -5,7 +5,7 @@ import FontPicker from "font-picker-react";
 import secrets from "../../server/secrets.json";
 import { useDispatch } from "react-redux";
 import { renderId } from "./redux/actions";
-import { Link } from "react-router-dom";
+import Share from "./share";
 
 export default function Compiler() {
     const url = useSelector((state) => state.url);
@@ -15,6 +15,7 @@ export default function Compiler() {
     const track = useSelector((state) => state.track);
     const artist = useSelector((state) => state.artist);
     const dispatch = useDispatch();
+    const [sending, setSending] = useState(false);
 
     useEffect(() => {
         {
@@ -24,7 +25,7 @@ export default function Compiler() {
                         value: trackId,
                     })
                     .then((response) => {
-                        console.log(response);
+                        // console.log(response);
                         setLyrics(response.data.snippet_body);
                     })
                     .catch((err) =>
@@ -43,6 +44,7 @@ export default function Compiler() {
             })
             .then((res) => {
                 dispatch(renderId(url, lyrics, artist, fonts, res.id));
+                setSending(true);
             })
             .catch((err) => console.log(err));
     }
@@ -55,17 +57,20 @@ export default function Compiler() {
                 </h1>
             </div>
             <div className="gridContainer">
-                <Link to="/share">
+                {!sending && (
                     <button onClick={handleClick}>click here when ready</button>
-                </Link>
-                <div>
-                    <FontPicker
-                        apiKey={secrets.GOOGLE_FONTS_KEY}
-                        activeFontFamily={fonts}
-                        categories="display"
-                        onChange={(nextFont) => setFonts(nextFont.family)}
-                    />
-                </div>
+                )}
+                {sending && <Share />}
+                {!sending && (
+                    <div>
+                        <FontPicker
+                            apiKey={secrets.GOOGLE_FONTS_KEY}
+                            activeFontFamily={fonts}
+                            categories="display"
+                            onChange={(nextFont) => setFonts(nextFont.family)}
+                        />
+                    </div>
+                )}
                 <div className="imageWrapper">
                     <img src={url} alt="image"></img>
                     <p className="apply-font">{lyrics}</p>

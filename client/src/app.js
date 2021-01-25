@@ -17,8 +17,7 @@ export default function App() {
                 <Route path="/ok" render={() => <Ok />} />
                 <Route path="/songs" render={() => <Songs />} />
                 <Route path="/compiler" render={() => <Compiler />} />
-                <Route path="/share" render={() => <Render />} />
-                <Route path="/shared:id" render={() => <Render />} />
+                <Route path="/shared/:id" render={() => <Render />} />
             </div>
         </BrowserRouter>
     );
