@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Ok from "./ok";
 import Songs from "./songs";
 import Compiler from "./compiler";
+import Render from "./render";
 
 export default function App() {
     return (
@@ -16,6 +17,8 @@ export default function App() {
                 <Route path="/ok" render={() => <Ok />} />
                 <Route path="/songs" render={() => <Songs />} />
                 <Route path="/compiler" render={() => <Compiler />} />
+                <Route path="/share" render={() => <Render />} />
+                <Route path="/shared:id" render={() => <Render />} />
             </div>
         </BrowserRouter>
     );

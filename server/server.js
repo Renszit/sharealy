@@ -45,14 +45,17 @@ app.post("/imageToSql", (req, res) => {
 });
 
 app.get("/shared/:id", (req, res) => {
-    db.getSqlImage(req.param.id).then(({ rows }) => {
-        const { url, lyrics, fonts } = rows[0];
-        res.json({
-            url: url,
-            lyrics: lyrics,
-            fonts: fonts,
-        });
-    });
+    db.getSqlImage(req.param.id)
+        .then(({ rows }) => {
+            const { url, lyrics, artist, fonts } = rows[0];
+            res.json({
+                url: url,
+                lyrics: lyrics,
+                artist: artist,
+                fonts: fonts,
+            });
+        })
+        .catch((err) => console.log("error in getting image", err));
 });
 
 app.post("/api/artist", (req, res) => {

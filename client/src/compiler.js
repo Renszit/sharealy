@@ -1,20 +1,20 @@
 import { useSelector } from "react-redux";
-import { useEffect, useState, createRef } from "react";
+import { useEffect, useState } from "react";
 import axios from "./axios";
 import FontPicker from "font-picker-react";
 import secrets from "../../server/secrets.json";
-import Share from "./share";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { renderId } from "./redux/actions";
+import { Link } from "react-router-dom";
 
 export default function Compiler() {
-    const ref = createRef(null);
     const url = useSelector((state) => state.url);
     const trackId = useSelector((state) => state.trackId);
     const [lyrics, setLyrics] = useState();
     const [fonts, setFonts] = useState("Poiret One");
     const track = useSelector((state) => state.track);
     const artist = useSelector((state) => state.artist);
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         {
@@ -38,11 +38,13 @@ export default function Compiler() {
             .post("/imageToSql", {
                 url: url,
                 lyrics: lyrics,
+                artist: artist,
                 fonts: fonts,
             })
-            .then((res) => console.log(res))
+            .then((res) => {
+                dispatch(renderId(url, lyrics, artist, fonts, res.id));
+            })
             .catch((err) => console.log(err));
-        // dispatch(finalRender(url, lyrics, fonts));
     }
 
     return (
@@ -51,10 +53,11 @@ export default function Compiler() {
                 <h1>
                     Awesome, {track} by {artist} is so good.
                 </h1>
-                <Share />
             </div>
             <div className="gridContainer">
-                <button onClick={handleClick}>click here when ready</button>
+                <Link to="/share">
+                    <button onClick={handleClick}>click here when ready</button>
+                </Link>
                 <div>
                     <FontPicker
                         apiKey={secrets.GOOGLE_FONTS_KEY}
@@ -63,7 +66,7 @@ export default function Compiler() {
                         onChange={(nextFont) => setFonts(nextFont.family)}
                     />
                 </div>
-                <div className="imageWrapper" ref={ref}>
+                <div className="imageWrapper">
                     <img src={url} alt="image"></img>
                     <p className="apply-font">{lyrics}</p>
                 </div>

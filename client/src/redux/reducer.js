@@ -2,6 +2,7 @@ const ACTIONS = {
     ARTIST_SET: "ARTIST_SET",
     URL: "URL",
     SONG_SET: "SONG_SET",
+    SET_RENDER: "SET_RENDER",
 };
 
 export function reducer(state = {}, action) {
@@ -21,6 +22,15 @@ export function reducer(state = {}, action) {
             ...state,
             track: action.track,
             trackId: action.trackId,
+        };
+    } else if (action.type == ACTIONS.SET_RENDER) {
+        state = {
+            ...state,
+            renderUrl: action.renderUrl,
+            renderLyrics: action.renderLyrics,
+            renderFonts: action.renderFonts,
+            renderId: action.renderId,
+            renderArtist: action.renderArtist,
         };
     }
     return state;

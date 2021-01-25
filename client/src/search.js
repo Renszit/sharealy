@@ -4,6 +4,7 @@ import { selectedArtist } from "./redux/actions";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
+
 export default function Search() {
     const dispatch = useDispatch();
     const [search, setSearch] = useState();
