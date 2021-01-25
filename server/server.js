@@ -4,9 +4,9 @@ const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
-
 const { MM_KEY, RAPID_API } = require("./secrets.json");
 const axios = require("axios");
+const db = require("./db");
 
 app.use(
     express.json({
@@ -31,6 +31,29 @@ app.use(function (req, res, next) {
 });
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
+
+app.post("/imageToSql", (req, res) => {
+    db.imageToSql(req.body.url, req.body.lyrics, req.body.fonts)
+        .then(({ rows }) => {
+            const { id } = rows[0];
+            res.json({
+                success: true,
+                id: id,
+            });
+        })
+        .catch((err) => console.log("error in posting to sql", err));
+});
+
+app.get("/shared/:id", (req, res) => {
+    db.getSqlImage(req.param.id).then(({ rows }) => {
+        const { url, lyrics, fonts } = rows[0];
+        res.json({
+            url: url,
+            lyrics: lyrics,
+            fonts: fonts,
+        });
+    });
+});
 
 app.post("/api/artist", (req, res) => {
     var options = {
