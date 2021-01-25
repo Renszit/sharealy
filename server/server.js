@@ -64,7 +64,7 @@ app.post("/api/images", (req, res) => {
         params: {
             q: req.body.value,
             pageNumber: "1",
-            pageSize: "8",
+            pageSize: "19",
             autoCorrect: "true",
             safeSearch: "true",
         },

@@ -114,29 +114,49 @@ header img {
     align-items: center;
     justify-content: center;
     display: flex;
-}
-
-.gridImage {
-    object-fit: cover;
-    width: 800px;
-    height: 400px;
-    margin: 20px;
-    /* transform: translateY(-10%); */
-    border-radius: 10px;
-    /* grid-area: 1 / 3 / 2 / 5; */
+    flex-direction: column;
 }
 
 .gridLyrics {
     background-color: grey;
-    /* grid-area: 1 / 5 / 2 / 6; */
+
+    z-index: 1;
+    color: white;
 }
 
-.gridFonts {
-    background-color: grey;
+.imageWrapper {
+    position: relative;
+    padding: 20px;
+    /* background-color: grey; */
     /* grid-area: 1 / 2 / 2 / 3; */
 }
 
-.lyrics {
-    font-size: 1.5em;
+.imageWrapper img {
+    filter: grayscale(100%);
+    object-fit: cover;
+    width: 500px;
+    height: 500px;
+    /* margin: 20px; */
+    border-radius: 10px;
+    display: block;
+    border: 10px white solid;
 }
+
+.imageWrapper p {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translate(0, -50%);
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    /* width: 590px; */
+    /* padding: 10px; */
+}
+
+.imageWrapper div {
+    padding: 10px;
+}
+
 /* //////// */

@@ -2,7 +2,7 @@ import Search from "./search";
 import { BrowserRouter, Route } from "react-router-dom";
 import Ok from "./ok";
 import Songs from "./songs";
-import Compiler from "./compiler";
+import Screenshot from "./screenshot";
 
 export default function App() {
     return (
@@ -15,7 +15,7 @@ export default function App() {
                 <Route exact path="/" render={() => <Search />} />
                 <Route path="/ok" render={() => <Ok />} />
                 <Route path="/songs" render={() => <Songs />} />
-                <Route path="/compiler" render={() => <Compiler />} />
+                <Route path="/compiler" render={() => <Screenshot />} />
             </div>
         </BrowserRouter>
     );

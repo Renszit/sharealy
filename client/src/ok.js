@@ -11,15 +11,18 @@ export default function Ok() {
     const [images, setImages] = useState();
 
     useEffect(() => {
-        axios
-            .post("/api/images", {
-                value: artist,
-            })
-            .then((response) => {
-                // console.log(response);
-                setImages(response.data);
-            })
-            .catch((err) => console.log("error in useEffect", err));
+        {
+            artist &&
+                axios
+                    .post("/api/images", {
+                        value: artist,
+                    })
+                    .then((response) => {
+                        // console.log(response);
+                        setImages(response.data);
+                    })
+                    .catch((err) => console.log("error in useEffect", err));
+        }
     }, [artist]);
 
     function handleImage(urlOfImage) {
