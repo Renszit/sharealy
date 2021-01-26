@@ -101,7 +101,7 @@ export default function Compiler() {
                     </div>
                 )}
                 {!sending && (
-                    <div>
+                    <div className="fontPickerContainer">
                         <FontPicker
                             apiKey={secrets.GOOGLE_FONTS_KEY}
                             activeFontFamily={fonts}

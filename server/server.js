@@ -55,7 +55,7 @@ app.get("/app/shared/:id", (req, res) => {
         .then(({ rows }) => {
             // console.log(result);
             const { url, lyrics, artist, fonts } = rows[0];
-            console.log("grabbing the right ur;", url);
+            // console.log("grabbing the right ur;", url);
             res.json({
                 url: url,
                 lyrics: lyrics,
@@ -163,6 +163,11 @@ app.post("/api/lyrics", (req, res) => {
         .catch(function (error) {
             console.error(error);
         });
+});
+
+
+app.get("/db/recent", (req, res) => {
+    db.getRecent().then(({ rows }) => res.json(rows));
 });
 
 app.get("*", function (req, res) {

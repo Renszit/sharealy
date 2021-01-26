@@ -39,12 +39,15 @@ export default function Render() {
 
     return (
         <div>
-            <FontPicker
-                apiKey={secrets.GOOGLE_FONTS_KEY}
-                activeFontFamily={fonts}
-                categories="display"
-                onChange={(nextFont) => setFonts(nextFont.family)}
-            />
+            <div className="fontPickerContainer">
+                <FontPicker
+                    apiKey={secrets.GOOGLE_FONTS_KEY}
+                    activeFontFamily={fonts}
+                    categories="display"
+                    onChange={(nextFont) => setFonts(nextFont.family)}
+                />
+            </div>
+
             <div className="container">
                 <h1>Someone thought you might like this song by {artist}</h1>
                 <div className="imageWrapper">

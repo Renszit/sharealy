@@ -156,3 +156,25 @@ header img {
 }
 
 /* //////// */
+
+.fontPickerContainer {
+    width: 400px;
+    position: absolute;
+    left: 20px;
+    top: 0;
+}
+
+.recentContainer {
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
+}
+
+.recentSearchContainer {
+    margin: 5px;
+}
+
+.recentSearchContainer:hover {
+    background-color: grey;
+}

@@ -4,6 +4,7 @@ import { selectedArtist } from "./redux/actions";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 // import Input from "@bit/semantic-org.semantic-ui-react.input";
+import RecentSearches from "./recent";
 
 export default function Search() {
     const dispatch = useDispatch();
@@ -57,6 +58,7 @@ export default function Search() {
                                 </Link>
                             </div>
                         ))}
+                    <RecentSearches />
                 </div>
             </div>
         </div>
