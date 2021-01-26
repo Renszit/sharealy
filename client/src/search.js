@@ -3,7 +3,7 @@ import axios from "./axios";
 import { selectedArtist } from "./redux/actions";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
+// import Input from "@bit/semantic-org.semantic-ui-react.input";
 
 export default function Search() {
     const dispatch = useDispatch();
@@ -38,6 +38,7 @@ export default function Search() {
                     placeholder="search here"
                     onKeyDown={handleKeyDown}
                 ></input>
+
                 <div className="container">
                     {result &&
                         result.map((artist, idx) => (

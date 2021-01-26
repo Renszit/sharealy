@@ -55,7 +55,7 @@ app.get("/app/shared/:id", (req, res) => {
         .then(({ rows }) => {
             // console.log(result);
             const { url, lyrics, artist, fonts } = rows[0];
-
+            console.log("grabbing the right ur;", url);
             res.json({
                 url: url,
                 lyrics: lyrics,

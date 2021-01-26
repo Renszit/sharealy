@@ -5,7 +5,16 @@ import FontPicker from "font-picker-react";
 import secrets from "../../server/secrets.json";
 import { useDispatch } from "react-redux";
 import { renderId } from "./redux/actions";
-import Share from "./share";
+import {
+    TwitterShareButton,
+    TwitterIcon,
+    FacebookShareButton,
+    FacebookIcon,
+    WhatsappShareButton,
+    WhatsappIcon,
+    EmailShareButton,
+    EmailIcon,
+} from "react-share";
 
 export default function Compiler() {
     const url = useSelector((state) => state.url);
@@ -15,8 +24,9 @@ export default function Compiler() {
     const track = useSelector((state) => state.track);
     const artist = useSelector((state) => state.artist);
     const dispatch = useDispatch();
+    const [sqlId, setsqlId] = useState();
     const [sending, setSending] = useState(false);
-
+    const shareUrl = "localhost:3000/shared/" + sqlId;
     useEffect(() => {
         {
             trackId &&
@@ -43,12 +53,14 @@ export default function Compiler() {
                 fonts: fonts,
             })
             .then((res) => {
-                dispatch(renderId(url, lyrics, artist, fonts, res.id));
+                dispatch(renderId(url, lyrics, artist, fonts, res.data.id));
+                setsqlId(res.data.id);
                 setSending(true);
             })
             .catch((err) => console.log(err));
     }
-
+    //sharesubject/message:
+    let emailBody = "Someone was sure you would like this song by " + artist;
     return (
         <div>
             <div className="container">
@@ -60,7 +72,34 @@ export default function Compiler() {
                 {!sending && (
                     <button onClick={handleClick}>click here when ready</button>
                 )}
-                {sending && <Share />}
+                {sending && (
+                    <div className="containerHorizontal">
+                        <TwitterShareButton
+                            title={lyrics}
+                            via="sharealy"
+                            url={shareUrl}
+                        >
+                            <TwitterIcon round size={32} />
+                        </TwitterShareButton>
+                        <FacebookShareButton
+                            hashtag={artist}
+                            quote={lyrics}
+                            url={shareUrl}
+                        >
+                            <FacebookIcon round size={32} />
+                        </FacebookShareButton>
+                        <WhatsappShareButton title={lyrics} url={shareUrl}>
+                            <WhatsappIcon round size={32} />
+                        </WhatsappShareButton>
+                        <EmailShareButton
+                            body={emailBody}
+                            subject={lyrics}
+                            url={shareUrl}
+                        >
+                            <EmailIcon round size={32} />
+                        </EmailShareButton>
+                    </div>
+                )}
                 {!sending && (
                     <div>
                         <FontPicker
