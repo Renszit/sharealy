@@ -27,6 +27,7 @@ export default function Compiler() {
     const [sqlId, setsqlId] = useState();
     const [sending, setSending] = useState(false);
     const shareUrl = "localhost:3000/shared/" + sqlId;
+
     useEffect(() => {
         {
             trackId &&
@@ -70,7 +71,9 @@ export default function Compiler() {
             </div>
             <div className="gridContainer">
                 {!sending && (
-                    <button onClick={handleClick}>click here when ready</button>
+                    <button className="takeItAway" onClick={handleClick}>
+                        take it away.
+                    </button>
                 )}
                 {sending && (
                     <div className="containerHorizontal">
@@ -105,7 +108,7 @@ export default function Compiler() {
                         <FontPicker
                             apiKey={secrets.GOOGLE_FONTS_KEY}
                             activeFontFamily={fonts}
-                            categories="display"
+                            families="[Roboto, Lobster, Poiret One,Dosis,Alfa slab, Abril Fatface,Staatliches, Faster One,Zilla Slab Highlight,Barrio,Jolly Lodger,Creepster]"
                             onChange={(nextFont) => setFonts(nextFont.family)}
                         />
                     </div>

@@ -23,10 +23,13 @@ export default function RecentSearches() {
                 {recent &&
                     recent.map((result, idx) => (
                         <div className="recentSearchContainer" key={idx}>
-                            <p>
-                                <strong>{result.artist}</strong>
+                            <p
+                                className="recentLyrics"
+                                onClick={() => handleClick(result.id)}
+                            >
+                                <strong>{result.lyrics}</strong>
                             </p>
-                            <p>{result.lyrics}</p>
+                            <p className="recentArtist">{result.artist}</p>
                         </div>
                     ))}
             </div>

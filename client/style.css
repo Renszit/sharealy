@@ -26,13 +26,26 @@ header img {
     /* border: 1px black solid; */
 }
 
+input:focus {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+}
+a:visited {
+    color: black;
+}
+
 .inputField {
     height: 40px;
     width: 200px;
     margin: 20px;
     font-size: 30px;
     border: none;
-    border-radius: 10px;
+    border-bottom: 1px #13505b solid;
+    background-color: #d7fff1;
+    /* border-radius: 10px; */
     text-align: center;
 }
 
@@ -45,13 +58,27 @@ header img {
     text-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px,
         rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
+
+.searchH1 {
+    font-family: "Pacifico";
+    font-size: 40px;
+    /* margin-bottom: 30px; */
+    color: #0c7489;
+    transform: translateY(-70%);
+    transition: all 1s ease;
+    text-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px,
+        rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+.searchH1:hover {
+    transform: translateY(-60%);
+}
+
 .logo:hover {
     transform: translateY(-30%);
 }
 /* SEARCH ARTIST component */
 
 .searchResults {
-    width: 300px;
     display: flex;
     padding: 10px;
     margin: 10px;
@@ -125,9 +152,9 @@ header img {
 
 .imageWrapper {
     position: relative;
-    padding: 20px;
     width: 510px;
     height: 510px;
+    margin: 20px;
 }
 
 .imageWrapper img {
@@ -159,8 +186,8 @@ header img {
 
 .fontPickerContainer {
     width: 400px;
-    position: absolute;
-    left: 20px;
+    position: fixed;
+    left: 0;
     top: 0;
 }
 
@@ -169,12 +196,44 @@ header img {
     border-radius: 10px;
     text-align: center;
     padding: 10px;
+    width: 500px;
+    margin: 10px;
+    height: 100%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .recentSearchContainer {
-    margin: 5px;
+    padding: 5px;
+    /* cursor: url(./public/gummy-cassette.svg), auto; */
+    margin: 10px;
 }
 
 .recentSearchContainer:hover {
-    background-color: grey;
+    background-color: rgba(0, 0, 0, 0.12);
 }
+
+.recentLyrics {
+    text-align: left;
+    /* font-size: 20 */
+}
+
+.recentArtist {
+    text-align: right;
+    font-size: 10px;
+}
+
+.takeItAway {
+    width: 200px;
+    height: 30px;
+    margin: 10px;
+}
+
+/* Font picker:
+font-family: 'Abril Fatface', cursive;
+font-family: 'Anton', sans-serif;
+font-family: 'Bebas Neue', cursive;
+font-family: 'Londrina Solid', cursive;
+font-family: 'Pacifico', cursive;
+font-family: 'Quicksand', sans-serif;
+font-family: 'Zilla Slab Highlight', cursive; */

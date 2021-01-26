@@ -43,7 +43,7 @@ export default function Render() {
                 <FontPicker
                     apiKey={secrets.GOOGLE_FONTS_KEY}
                     activeFontFamily={fonts}
-                    categories="display"
+                    families="[Roboto, Lobster, Poiret One,Dosis,Alfa slab, Abril Fatface,Staatliches, Faster One,Zilla Slab Highlight,Barrio,Jolly Lodger,Creepster]"
                     onChange={(nextFont) => setFonts(nextFont.family)}
                 />
             </div>

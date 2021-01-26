@@ -31,33 +31,40 @@ export default function Search() {
     return (
         <div>
             <div className="container">
-                <h1>first, find an artist you really like</h1>
+                <h1 className="searchH1">as in share a lyric...</h1>
+                <h1>First, find an artist you really like:</h1>
                 <input
                     onChange={(e) => setSearch(e.target.value)}
                     type="text"
                     className="inputField"
-                    placeholder="search here"
+                    placeholder="search..."
                     onKeyDown={handleKeyDown}
                 ></input>
 
                 <div className="container">
-                    {result &&
-                        result.map((artist, idx) => (
-                            <div className="searchResults" key={idx}>
-                                <Link to="/ok">
-                                    <p
-                                        onClick={() =>
-                                            handleClick(
-                                                artist.artist.artist_name,
-                                                artist.artist.artist_id
-                                            )
-                                        }
-                                    >
-                                        {artist.artist.artist_name}
-                                    </p>
-                                </Link>
-                            </div>
-                        ))}
+                    {result && (
+                        <div className="recentContainer">
+                            {result && <h1>search results:</h1>}
+                            {result &&
+                                result.map((artist, idx) => (
+                                    <div className="searchResults" key={idx}>
+                                        <Link to="/ok">
+                                            <p
+                                                onClick={() =>
+                                                    handleClick(
+                                                        artist.artist
+                                                            .artist_name,
+                                                        artist.artist.artist_id
+                                                    )
+                                                }
+                                            >
+                                                {artist.artist.artist_name}
+                                            </p>
+                                        </Link>
+                                    </div>
+                                ))}
+                        </div>
+                    )}
                     <RecentSearches />
                 </div>
             </div>
