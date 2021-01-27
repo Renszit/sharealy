@@ -137,17 +137,19 @@ export default function Compiler() {
                         <FontPicker
                             apiKey={secrets.GOOGLE_FONTS_KEY}
                             activeFontFamily={fonts}
-                            families="[Roboto, Lobster, Poiret One,Dosis,Alfa slab, Abril Fatface,Staatliches, Faster One,Zilla Slab Highlight,Barrio,Jolly Lodger,Creepster]"
+                            families="[Abril Fatface, Anton, Bebas Neue,Londrina Solid,Pacifico, Quicksand,Zilla Slab Highlight]"
                             onChange={(nextFont) => setFonts(nextFont.family)}
                         />
                     </div>
                 )}
                 <div className="imageWrapper">
                     <img src={url} alt="image"></img>
-                    <p className="apply-font">{lyrics}</p>
+                    <p className="apply-font">
+                        {lyrics}
+                    </p>
                 </div>
                 {youtubeVid && (
-                    <img className="youtubeArrow" src="down-arrow.svg"></img>
+                    <img className="youtubeArrow" src="./down-arrow.svg"></img>
                 )}
                 {youtubeVid &&
                     youtubeVid.map((video, idx) => (

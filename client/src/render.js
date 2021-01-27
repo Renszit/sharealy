@@ -1,8 +1,8 @@
 // import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import FontPicker from "font-picker-react";
-import secrets from "../../server/secrets.json";
+// import FontPicker from "font-picker-react";
+// import secrets from "../../server/secrets.json";
 import axios from "./axios";
 import ReactPlayer from "react-player";
 
@@ -50,21 +50,21 @@ export default function Render() {
                         setFonts(fonts);
                         setYoutube(youtube);
                         setId(id);
-                        axios
-                            .post("/api/youtube", {
-                                track: track,
-                                artist: artist,
-                            })
-                            .then((res) => updateYoutubeVideos(res.data))
-                            .catch((err) =>
-                                console.log(
-                                    "error in getting render videos",
-                                    err
-                                )
-                            );
                     })
                     .catch((err) =>
                         console.log("getting image in render failed", err)
+                    );
+        }
+        {
+            track &&
+                axios
+                    .post("/api/youtube", {
+                        track: track,
+                        artist: artist,
+                    })
+                    .then((res) => updateYoutubeVideos(res.data))
+                    .catch((err) =>
+                        console.log("error in getting render videos", err)
                     );
         }
     }, [id]);
@@ -75,18 +75,9 @@ export default function Render() {
 
     return (
         <div>
-            <div className="fontPickerContainer">
-                <FontPicker
-                    apiKey={secrets.GOOGLE_FONTS_KEY}
-                    activeFontFamily={fonts}
-                    families="[Roboto, Lobster, Poiret One,Dosis,Alfa slab, Abril Fatface,Staatliches, Faster One,Zilla Slab Highlight,Barrio,Jolly Lodger,Creepster]"
-                    onChange={(nextFont) => setFonts(nextFont.family)}
-                />
-            </div>
-
             <div className="container">
                 <h1>
-                    You might like {track} by {artist}
+                    {track} by {artist}
                 </h1>
                 <div className="imageWrapper">
                     <a href={youtubelink}>
@@ -96,7 +87,9 @@ export default function Render() {
                             alt="image"
                         ></img>
                     </a>
-                    <p className="apply-font">{lyrics}</p>
+                    <p style={{ fontFamily: fonts }} className="apply-font">
+                        {lyrics}
+                    </p>
                 </div>
                 <img className="youtubeArrow" src="./down-arrow.svg"></img>
                 {videos &&
