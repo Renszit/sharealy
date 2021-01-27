@@ -12,16 +12,6 @@ export default function Render() {
     const [artist, setArtist] = useState();
     const [youtubelink, setYoutube] = useState();
     const [track, setTrack] = useState();
-    // const [videos, setVideos] = useState();
-
-    // const updateYoutubeVideos = (array) => {
-    //     for (let i = 0; i < array.length; i++) {
-    //         if (array[i].type !== "video") {
-    //             array.splice(i, 1);
-    //         }
-    //     }
-    //     setVideos(array);
-    // };
 
     useEffect(() => {
         {
@@ -51,18 +41,7 @@ export default function Render() {
                         console.log("getting image in render failed", err)
                     );
         }
-        // {
-        //     track &&
-        //         axios
-        //             .post("/api/youtube", {
-        //                 track: track,
-        //                 artist: artist,
-        //             })
-        //             .then((res) => updateYoutubeVideos(res.data))
-        //             .catch((err) =>
-        //                 console.log("error in getting render videos", err)
-        //             );
-        // }
+      
     }, [id]);
 
     if (!url || !lyrics || !track || !youtubelink || !artist || !fonts || !id) {

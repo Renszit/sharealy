@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "./axios";
 import FontPicker from "font-picker-react";
 import secrets from "../../server/secrets.json";
 import { useDispatch } from "react-redux";
 import { renderId } from "./redux/actions";
 import ReactPlayer from "react-player";
+
+
 import {
     TwitterShareButton,
     TwitterIcon,
@@ -29,7 +31,9 @@ export default function Compiler() {
     const [sending, setSending] = useState(false);
     const shareUrl = "localhost:3000/shared/" + sqlId;
     const [youtubeVid, setYoutube] = useState();
-    // const arrowRef = useRef();
+    // const ref = useRef();
+    const arrowRef = useRef();
+    const [loading, setLoading] = useState();
 
     const updateYoutubeVideos = (array) => {
         for (let i = 0; i < array.length; i++) {
@@ -59,6 +63,7 @@ export default function Compiler() {
 
     //hier eerst youtube api. daarna axios post2.
     function handleClick() {
+        setLoading(true);
         axios
             .post("/api/youtube", { track: track, artist: artist })
             .then((res) => {
@@ -76,13 +81,12 @@ export default function Compiler() {
                         youtube: sqlLink,
                     })
                     .then((res) => {
-                        // console.log(res);
                         dispatch(
                             renderId(url, lyrics, artist, fonts, res.data.id)
                         );
-                        // arrowRef.scrollIntoVIew({ behavior: "smooth" });
                         setsqlId(res.data.id);
                         setSending(true);
+                        setLoading(false);
                     })
                     .catch((err) => console.log("error in posting image", err));
             })
@@ -97,11 +101,12 @@ export default function Compiler() {
                 <h1>
                     Awesome, {track} by {artist} is a great pick.
                 </h1>
-                {!sending && (
+                {!sending && !loading && (
                     <button className="takeItAway" onClick={handleClick}>
                         share
                     </button>
                 )}
+                
             </div>
             <div className="gridContainer">
                 {!sending && (
@@ -159,7 +164,11 @@ export default function Compiler() {
                     <p className="apply-font">{lyrics}</p>
                 </div>
                 {youtubeVid && (
-                    <img className="youtubeArrow" src="./down-arrow.svg"></img>
+                    <img
+                        ref={arrowRef}
+                        className="youtubeArrow"
+                        src="./down-arrow.svg"
+                    ></img>
                 )}
                 {youtubeVid &&
                     youtubeVid.map((video, idx) => (
