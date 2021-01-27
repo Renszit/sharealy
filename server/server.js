@@ -56,9 +56,10 @@ app.get("/app/shared/:id", (req, res) => {
     db.getSqlImage(req.params.id)
         .then(({ rows }) => {
             // console.log(result);
-            const { url, track, lyrics, artist, fonts, youtube } = rows[0];
+            const { id, url, track, lyrics, artist, fonts, youtube } = rows[0];
             // console.log("grabbing the right ur;", url);
             res.json({
+                id: id,
                 url: url,
                 track: track,
                 lyrics: lyrics,

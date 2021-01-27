@@ -11,7 +11,7 @@ module.exports.imageToSql = (url, track, lyrics, artist, fonts, youtube) => {
 };
 
 module.exports.getSqlImage = (id) => {
-    const k = "SELECT url,track,lyrics,artist,fonts,youtube FROM shareify WHERE id = ($1)";
+    const k = "SELECT id,url,track,lyrics,artist,fonts,youtube FROM shareify WHERE id = ($1)";
     const params = [id];
     return db.query(k, params);
 };

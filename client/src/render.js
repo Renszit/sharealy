@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import FontPicker from "font-picker-react";
 import secrets from "../../server/secrets.json";
 import axios from "./axios";
+import ReactPlayer from "react-player";
+
 // import {Link} from
 export default function Render() {
     let params = useParams();
@@ -12,8 +14,18 @@ export default function Render() {
     const [fonts, setFonts] = useState("Poiret One");
     const [url, setUrl] = useState();
     const [artist, setArtist] = useState();
-    const [youtube, setYoutube] = useState();
+    const [youtubelink, setYoutube] = useState();
     const [track, setTrack] = useState();
+    const [videos, setVideos] = useState();
+
+    const updateYoutubeVideos = (array) => {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].type !== "video") {
+                array.splice(i, 1);
+            }
+        }
+        setVideos(array);
+    };
 
     useEffect(() => {
         {
@@ -29,6 +41,7 @@ export default function Render() {
                             artist,
                             fonts,
                             youtube,
+                            id,
                         } = res.data;
                         setUrl(url);
                         setTrack(track);
@@ -36,7 +49,19 @@ export default function Render() {
                         setArtist(artist);
                         setFonts(fonts);
                         setYoutube(youtube);
-                        setId(params.id);
+                        setId(id);
+                        axios
+                            .post("/api/youtube", {
+                                track: track,
+                                artist: artist,
+                            })
+                            .then((res) => updateYoutubeVideos(res.data))
+                            .catch((err) =>
+                                console.log(
+                                    "error in getting render videos",
+                                    err
+                                )
+                            );
                     })
                     .catch((err) =>
                         console.log("getting image in render failed", err)
@@ -44,7 +69,7 @@ export default function Render() {
         }
     }, [id]);
 
-    if (!url || !lyrics || !track || !youtube || !artist || !fonts || !id) {
+    if (!url || !lyrics || !track || !youtubelink || !artist || !fonts || !id) {
         return null;
     }
 
@@ -64,7 +89,7 @@ export default function Render() {
                     You might like {track} by {artist}
                 </h1>
                 <div className="imageWrapper">
-                    <a href={youtube}>
+                    <a href={youtubelink}>
                         <img
                             className="renderImage"
                             src={url}
@@ -73,6 +98,13 @@ export default function Render() {
                     </a>
                     <p className="apply-font">{lyrics}</p>
                 </div>
+                <img className="youtubeArrow" src="./down-arrow.svg"></img>
+                {videos &&
+                    videos.map((video, idx) => (
+                        <div className="youtubeVideo" key={idx}>
+                            <ReactPlayer url={video.link} />
+                        </div>
+                    ))}
             </div>
         </div>
     );
