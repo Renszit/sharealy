@@ -186,7 +186,7 @@ app.post("/api/youtube", (req, res) => {
     axios
         .request(options)
         .then(function (response) {
-            // console.log(response.data.items);
+            console.log("data api youtube:",response.data);
             res.json(response.data.items);
         })
         .catch(function (error) {

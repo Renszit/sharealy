@@ -1,10 +1,10 @@
 // import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useParams,Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import FontPicker from "font-picker-react";
 import secrets from "../../server/secrets.json";
 import axios from "./axios";
-// import {Link} from 
+// import {Link} from
 export default function Render() {
     let params = useParams();
     const [id, setId] = useState();
@@ -12,7 +12,7 @@ export default function Render() {
     const [fonts, setFonts] = useState("Poiret One");
     const [url, setUrl] = useState();
     const [artist, setArtist] = useState();
-    const [youtube, setYoutube]= useState();
+    const [youtube, setYoutube] = useState();
     const [track, setTrack] = useState();
 
     useEffect(() => {
@@ -22,7 +22,14 @@ export default function Render() {
                     .get("/app/shared/" + params.id)
                     .then((res) => {
                         console.log("response", res);
-                        const { url,track, lyrics, artist, fonts,youtube } = res.data;
+                        const {
+                            url,
+                            track,
+                            lyrics,
+                            artist,
+                            fonts,
+                            youtube,
+                        } = res.data;
                         setUrl(url);
                         setTrack(track);
                         setLyrics(lyrics);
@@ -37,7 +44,7 @@ export default function Render() {
         }
     }, [id]);
 
-    if (!url || !lyrics || !track|| !youtube|| !artist || !fonts || !id) {
+    if (!url || !lyrics || !track || !youtube || !artist || !fonts || !id) {
         return null;
     }
 

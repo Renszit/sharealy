@@ -85,6 +85,7 @@ a:visited {
     object-fit: contain;
     justify-content: center;
     align-items: center;
+    
 }
 .searchResults:hover {
     background-color: rgba(0, 0, 0, 0.12);
@@ -128,8 +129,8 @@ a:visited {
 }
 
 .songImage {
-    width: 400px;
-    height: 300px;
+    width: 510px;
+    height: 400px;
     border-radius: 10px;
     object-fit: cover;
     margin: 20px;
@@ -239,6 +240,16 @@ a:visited {
     transform: scale(1.05);
     transition: 1s ease;
     cursor: pointer;
+}
+
+.youtubeArrow {
+    width: 40px;
+    margin: 20px;
+}
+
+.youtubeVideo {
+    margin: 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 /* Font picker:
 font-family: 'Abril Fatface', cursive;

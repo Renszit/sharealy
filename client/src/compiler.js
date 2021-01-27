@@ -5,7 +5,7 @@ import FontPicker from "font-picker-react";
 import secrets from "../../server/secrets.json";
 import { useDispatch } from "react-redux";
 import { renderId } from "./redux/actions";
-import {Link } from "react-router-dom";
+import ReactPlayer from "react-player";
 import {
     TwitterShareButton,
     TwitterIcon,
@@ -28,7 +28,17 @@ export default function Compiler() {
     const [sqlId, setsqlId] = useState();
     const [sending, setSending] = useState(false);
     const shareUrl = "localhost:3000/shared/" + sqlId;
-    const [youtube, setYoutube] = useState();
+    const [youtubeVid, setYoutube] = useState();
+    // const arrowRef = useRef();
+
+    const updateYoutubeVideos = (array) => {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].type !== "video") {
+                array.splice(i, 1);
+            }
+        }
+        setYoutube(array);
+    };
 
     useEffect(() => {
         {
@@ -52,10 +62,10 @@ export default function Compiler() {
         axios
             .post("/api/youtube", { track: track, artist: artist })
             .then((res) => {
-                // console.log(res);
-                setYoutube(res.data);
                 let sqlLink = res.data[1].link;
-                // console.log(sqlLink);
+                // console.log(res.data);
+                updateYoutubeVideos(res.data);
+
                 axios
                     .post("/imageToSql", {
                         url: url,
@@ -66,14 +76,17 @@ export default function Compiler() {
                         youtube: sqlLink,
                     })
                     .then((res) => {
+                        // console.log(res);
                         dispatch(
                             renderId(url, lyrics, artist, fonts, res.data.id)
                         );
+                        // arrowRef.scrollIntoVIew({ behavior: "smooth" });
                         setsqlId(res.data.id);
                         setSending(true);
                     })
-                    .catch((err) => console.log(err));
-            });
+                    .catch((err) => console.log("error in posting image", err));
+            })
+            .catch((err) => console.log("error in getting youtube", err));
     }
 
     //sharesubject/message:
@@ -130,11 +143,18 @@ export default function Compiler() {
                     </div>
                 )}
                 <div className="imageWrapper">
-                    <Link to={youtube}>
-                        <img src={url} alt="image"></img>
-                    </Link>
+                    <img src={url} alt="image"></img>
                     <p className="apply-font">{lyrics}</p>
                 </div>
+                {youtubeVid && (
+                    <img className="youtubeArrow" src="down-arrow.svg"></img>
+                )}
+                {youtubeVid &&
+                    youtubeVid.map((video, idx) => (
+                        <div className="youtubeVideo" key={idx}>
+                            <ReactPlayer url={video.link} />
+                        </div>
+                    ))}
             </div>
         </div>
     );

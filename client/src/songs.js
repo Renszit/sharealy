@@ -40,23 +40,28 @@ export default function Songs() {
                     className="inputField"
                     type="text"
                 ></input>
-                {result &&
-                    result.map((track, idx) => (
-                        <div
-                            onClick={() =>
-                                handleClick(
-                                    track.track.track_name,
-                                    track.track.track_id
-                                )
-                            }
-                            className="searchResults"
-                            key={idx}
-                        >
-                            <Link to="/compiler">
-                                <p>{track.track.track_name}</p>
-                            </Link>
-                        </div>
-                    ))}
+                {result && (
+                    <div className="recentContainer">
+                        <h1 className="recentSharesH1">search results</h1>
+                        {result &&
+                            result.map((track, idx) => (
+                                <div
+                                    key={idx}
+                                    onClick={() =>
+                                        handleClick(
+                                            track.track.track_name,
+                                            track.track.track_id
+                                        )
+                                    }
+                                    className="searchResults"
+                                >
+                                    <Link to="/compiler">
+                                        <p>{track.track.track_name}</p>
+                                    </Link>
+                                </div>
+                            ))}
+                    </div>
+                )}
                 <img className="songImage" src={image}></img>
             </div>
         </div>
