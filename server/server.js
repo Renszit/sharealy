@@ -35,9 +35,11 @@ app.use(express.static(path.join(__dirname, "..", "client", "public")));
 app.post("/imageToSql", (req, res) => {
     db.imageToSql(
         req.body.url,
+        req.body.track,
         req.body.lyrics,
         req.body.artist,
-        req.body.fonts
+        req.body.fonts,
+        req.body.youtube
     )
         .then(({ rows }) => {
             const { id } = rows[0];
@@ -54,13 +56,15 @@ app.get("/app/shared/:id", (req, res) => {
     db.getSqlImage(req.params.id)
         .then(({ rows }) => {
             // console.log(result);
-            const { url, lyrics, artist, fonts } = rows[0];
+            const { url, track, lyrics, artist, fonts, youtube } = rows[0];
             // console.log("grabbing the right ur;", url);
             res.json({
                 url: url,
+                track: track,
                 lyrics: lyrics,
                 artist: artist,
                 fonts: fonts,
+                youtube: youtube,
             });
         })
         .catch((err) => console.log("error in getting image", err));
@@ -165,6 +169,30 @@ app.post("/api/lyrics", (req, res) => {
         });
 });
 
+app.post("/api/youtube", (req, res) => {
+    let track = req.body.track.replace(/\s/g, "+");
+    let artist = req.body.artist.replace(/\s/g, "+");
+
+    var options = {
+        method: "GET",
+        url: "https://youtube-search-results.p.rapidapi.com/youtube-search/",
+        params: { q: track + artist },
+        headers: {
+            "x-rapidapi-key": RAPID_API,
+            "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
+        },
+    };
+
+    axios
+        .request(options)
+        .then(function (response) {
+            // console.log(response.data.items);
+            res.json(response.data.items);
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+});
 
 app.get("/db/recent", (req, res) => {
     db.getRecent().then(({ rows }) => res.json(rows));

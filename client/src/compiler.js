@@ -5,6 +5,7 @@ import FontPicker from "font-picker-react";
 import secrets from "../../server/secrets.json";
 import { useDispatch } from "react-redux";
 import { renderId } from "./redux/actions";
+import {Link } from "react-router-dom";
 import {
     TwitterShareButton,
     TwitterIcon,
@@ -27,6 +28,7 @@ export default function Compiler() {
     const [sqlId, setsqlId] = useState();
     const [sending, setSending] = useState(false);
     const shareUrl = "localhost:3000/shared/" + sqlId;
+    const [youtube, setYoutube] = useState();
 
     useEffect(() => {
         {
@@ -45,21 +47,35 @@ export default function Compiler() {
         }
     }, [trackId]);
 
+    //hier eerst youtube api. daarna axios post2.
     function handleClick() {
         axios
-            .post("/imageToSql", {
-                url: url,
-                lyrics: lyrics,
-                artist: artist,
-                fonts: fonts,
-            })
+            .post("/api/youtube", { track: track, artist: artist })
             .then((res) => {
-                dispatch(renderId(url, lyrics, artist, fonts, res.data.id));
-                setsqlId(res.data.id);
-                setSending(true);
-            })
-            .catch((err) => console.log(err));
+                // console.log(res);
+                setYoutube(res.data);
+                let sqlLink = res.data[1].link;
+                // console.log(sqlLink);
+                axios
+                    .post("/imageToSql", {
+                        url: url,
+                        track: track,
+                        lyrics: lyrics,
+                        artist: artist,
+                        fonts: fonts,
+                        youtube: sqlLink,
+                    })
+                    .then((res) => {
+                        dispatch(
+                            renderId(url, lyrics, artist, fonts, res.data.id)
+                        );
+                        setsqlId(res.data.id);
+                        setSending(true);
+                    })
+                    .catch((err) => console.log(err));
+            });
     }
+
     //sharesubject/message:
     let emailBody = "Someone was sure you would like this song by " + artist;
     return (
@@ -87,7 +103,7 @@ export default function Compiler() {
                         <FacebookShareButton
                             hashtag={artist}
                             quote={lyrics}
-                            url={shareUrl}
+                            href={shareUrl}
                         >
                             <FacebookIcon round size={32} />
                         </FacebookShareButton>
@@ -114,7 +130,9 @@ export default function Compiler() {
                     </div>
                 )}
                 <div className="imageWrapper">
-                    <img src={url} alt="image"></img>
+                    <Link to={youtube}>
+                        <img src={url} alt="image"></img>
+                    </Link>
                     <p className="apply-font">{lyrics}</p>
                 </div>
             </div>

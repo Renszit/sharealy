@@ -3,15 +3,15 @@ var db = spicedPg(
     process.env.DATABASE_URL || "postgres:rens:social@localhost:5432/social"
 );
 
-module.exports.imageToSql = (url, lyrics, artist, fonts) => {
+module.exports.imageToSql = (url, track, lyrics, artist, fonts, youtube) => {
     const k =
-        "INSERT INTO shareify (url,lyrics,artist,fonts) VALUES ($1,$2,$3,$4) RETURNING id";
-    const params = [url, lyrics, artist, fonts];
+        "INSERT INTO shareify (url,track,lyrics,artist,fonts,youtube) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id";
+    const params = [url, track, lyrics, artist, fonts, youtube];
     return db.query(k, params);
 };
 
 module.exports.getSqlImage = (id) => {
-    const k = "SELECT url,lyrics,artist,fonts FROM shareify WHERE id = ($1)";
+    const k = "SELECT url,track,lyrics,artist,fonts,youtube FROM shareify WHERE id = ($1)";
     const params = [id];
     return db.query(k, params);
 };

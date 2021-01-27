@@ -19,7 +19,7 @@ export default function RecentSearches() {
     return (
         <div>
             <div className="recentContainer">
-                <h1>recent shares:</h1>
+                <h1 className="recentSharesH1">recent shares</h1>
                 {recent &&
                     recent.map((result, idx) => (
                         <div className="recentSearchContainer" key={idx}>
@@ -27,7 +27,7 @@ export default function RecentSearches() {
                                 className="recentLyrics"
                                 onClick={() => handleClick(result.id)}
                             >
-                                <strong>{result.lyrics}</strong>
+                                {result.lyrics}
                             </p>
                             <p className="recentArtist">{result.artist}</p>
                         </div>

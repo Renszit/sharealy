@@ -214,6 +214,7 @@ a:visited {
 }
 
 .recentLyrics {
+    font-style: italic;
     text-align: left;
     /* font-size: 20 */
 }
@@ -229,6 +230,16 @@ a:visited {
     margin: 10px;
 }
 
+.recentSharesH1 {
+    color: #D7FFF1;
+    text-shadow: -1px -1px 1px rgba(255,255,255,.1), 1px 1px 1px rgba(0,0,0,.5), 2px 10px 8px rgba(215,255,241,0);
+}
+
+.renderImage:hover {
+    transform: scale(1.05);
+    transition: 1s ease;
+    cursor: pointer;
+}
 /* Font picker:
 font-family: 'Abril Fatface', cursive;
 font-family: 'Anton', sans-serif;

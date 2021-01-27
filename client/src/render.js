@@ -1,10 +1,10 @@
 // import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
 import FontPicker from "font-picker-react";
 import secrets from "../../server/secrets.json";
 import axios from "./axios";
-
+// import {Link} from 
 export default function Render() {
     let params = useParams();
     const [id, setId] = useState();
@@ -12,6 +12,8 @@ export default function Render() {
     const [fonts, setFonts] = useState("Poiret One");
     const [url, setUrl] = useState();
     const [artist, setArtist] = useState();
+    const [youtube, setYoutube]= useState();
+    const [track, setTrack] = useState();
 
     useEffect(() => {
         {
@@ -20,11 +22,13 @@ export default function Render() {
                     .get("/app/shared/" + params.id)
                     .then((res) => {
                         console.log("response", res);
-                        const { url, lyrics, artist, fonts } = res.data;
+                        const { url,track, lyrics, artist, fonts,youtube } = res.data;
                         setUrl(url);
+                        setTrack(track);
                         setLyrics(lyrics);
                         setArtist(artist);
                         setFonts(fonts);
+                        setYoutube(youtube);
                         setId(params.id);
                     })
                     .catch((err) =>
@@ -33,7 +37,7 @@ export default function Render() {
         }
     }, [id]);
 
-    if (!url || !lyrics || !artist || !fonts || !id) {
+    if (!url || !lyrics || !track|| !youtube|| !artist || !fonts || !id) {
         return null;
     }
 
@@ -49,9 +53,17 @@ export default function Render() {
             </div>
 
             <div className="container">
-                <h1>Someone thought you might like this song by {artist}</h1>
+                <h1>
+                    You might like {track} by {artist}
+                </h1>
                 <div className="imageWrapper">
-                    <img src={url} alt="image"></img>
+                    <a href={youtube}>
+                        <img
+                            className="renderImage"
+                            src={url}
+                            alt="image"
+                        ></img>
+                    </a>
                     <p className="apply-font">{lyrics}</p>
                 </div>
             </div>

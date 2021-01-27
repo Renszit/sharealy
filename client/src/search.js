@@ -44,7 +44,11 @@ export default function Search() {
                 <div className="container">
                     {result && (
                         <div className="recentContainer">
-                            {result && <h1>search results:</h1>}
+                            {result && (
+                                <h1 className="recentSharesH1">
+                                    search results
+                                </h1>
+                            )}
                             {result &&
                                 result.map((artist, idx) => (
                                     <div className="searchResults" key={idx}>
