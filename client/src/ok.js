@@ -37,8 +37,8 @@ export default function Ok() {
         <div>
             <div className="container">
                 <div className="container">
-                    {artist && <p>Ok, so you like {artist}</p>}
-                    <p>now select a picture below you like</p>
+                    {artist && <h3>Ok, so you like {artist}</h3>}
+                    <h3>now select a picture below you like</h3>
 
                     <div className="containerHorizontal">
                         {images &&

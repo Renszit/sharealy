@@ -36,6 +36,7 @@ export default function Songs() {
                 <p>Cool. what is your favorite song by {artist}?</p>
                 <input
                     onChange={(e) => setSearch(e.target.value)}
+                    placeholder="not sure? press enter!"
                     onKeyDown={handleKeyDown}
                     className="inputField"
                     type="text"

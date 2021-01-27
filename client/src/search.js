@@ -31,8 +31,7 @@ export default function Search() {
     return (
         <div>
             <div className="container">
-                <h1 className="searchH1">as in share a lyric...</h1>
-                <h1>First, find an artist you really like:</h1>
+                <h3>First, find an artist you really like:</h3>
                 <input
                     onChange={(e) => setSearch(e.target.value)}
                     type="text"

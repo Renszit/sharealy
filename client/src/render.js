@@ -1,12 +1,8 @@
-// import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import FontPicker from "font-picker-react";
-// import secrets from "../../server/secrets.json";
 import axios from "./axios";
 import ReactPlayer from "react-player";
 
-// import {Link} from
 export default function Render() {
     let params = useParams();
     const [id, setId] = useState();
@@ -16,16 +12,16 @@ export default function Render() {
     const [artist, setArtist] = useState();
     const [youtubelink, setYoutube] = useState();
     const [track, setTrack] = useState();
-    const [videos, setVideos] = useState();
+    // const [videos, setVideos] = useState();
 
-    const updateYoutubeVideos = (array) => {
-        for (let i = 0; i < array.length; i++) {
-            if (array[i].type !== "video") {
-                array.splice(i, 1);
-            }
-        }
-        setVideos(array);
-    };
+    // const updateYoutubeVideos = (array) => {
+    //     for (let i = 0; i < array.length; i++) {
+    //         if (array[i].type !== "video") {
+    //             array.splice(i, 1);
+    //         }
+    //     }
+    //     setVideos(array);
+    // };
 
     useEffect(() => {
         {
@@ -55,18 +51,18 @@ export default function Render() {
                         console.log("getting image in render failed", err)
                     );
         }
-        {
-            track &&
-                axios
-                    .post("/api/youtube", {
-                        track: track,
-                        artist: artist,
-                    })
-                    .then((res) => updateYoutubeVideos(res.data))
-                    .catch((err) =>
-                        console.log("error in getting render videos", err)
-                    );
-        }
+        // {
+        //     track &&
+        //         axios
+        //             .post("/api/youtube", {
+        //                 track: track,
+        //                 artist: artist,
+        //             })
+        //             .then((res) => updateYoutubeVideos(res.data))
+        //             .catch((err) =>
+        //                 console.log("error in getting render videos", err)
+        //             );
+        // }
     }, [id]);
 
     if (!url || !lyrics || !track || !youtubelink || !artist || !fonts || !id) {
@@ -91,13 +87,9 @@ export default function Render() {
                         {lyrics}
                     </p>
                 </div>
-                <img className="youtubeArrow" src="./down-arrow.svg"></img>
-                {videos &&
-                    videos.map((video, idx) => (
-                        <div className="youtubeVideo" key={idx}>
-                            <ReactPlayer url={video.link} />
-                        </div>
-                    ))}
+                <div className="youtubeVideo">
+                    <ReactPlayer url={youtubelink} />
+                </div>
             </div>
         </div>
     );

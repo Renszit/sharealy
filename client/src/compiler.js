@@ -95,42 +95,17 @@ export default function Compiler() {
         <div>
             <div className="container">
                 <h1>
-                    Awesome, {track} by {artist} is so good.
+                    Awesome, {track} by {artist} is a great pick.
                 </h1>
+                {!sending && (
+                    <button className="takeItAway" onClick={handleClick}>
+                        share
+                    </button>
+                )}
             </div>
             <div className="gridContainer">
                 {!sending && (
-                    <button className="takeItAway" onClick={handleClick}>
-                        take it away.
-                    </button>
-                )}
-                {sending && (
-                    <div className="containerHorizontal">
-                        <TwitterShareButton
-                            title={lyrics}
-                            via="sharealy"
-                            url={shareUrl}
-                        >
-                            <TwitterIcon round size={32} />
-                        </TwitterShareButton>
-                        <FacebookShareButton
-                            hashtag={artist}
-                            quote={lyrics}
-                            href={shareUrl}
-                        >
-                            <FacebookIcon round size={32} />
-                        </FacebookShareButton>
-                        <WhatsappShareButton title={lyrics} url={shareUrl}>
-                            <WhatsappIcon round size={32} />
-                        </WhatsappShareButton>
-                        <EmailShareButton
-                            body={emailBody}
-                            subject={lyrics}
-                            url={shareUrl}
-                        >
-                            <EmailIcon round size={32} />
-                        </EmailShareButton>
-                    </div>
+                    <p>if you want you can change the font on the image here</p>
                 )}
                 {!sending && (
                     <div className="fontPickerContainer">
@@ -142,11 +117,46 @@ export default function Compiler() {
                         />
                     </div>
                 )}
+                {sending && (
+                    <div className="containerHorizontal">
+                        <div className="socialButton">
+                            <TwitterShareButton
+                                title={lyrics}
+                                via="sharealy"
+                                url={shareUrl}
+                            >
+                                <TwitterIcon round size={32} />
+                            </TwitterShareButton>
+                        </div>
+                        <div className="socialButton">
+                            <FacebookShareButton
+                                hashtag={artist}
+                                quote={lyrics}
+                                href={shareUrl}
+                            >
+                                <FacebookIcon round size={32} />
+                            </FacebookShareButton>
+                        </div>
+                        <div className="socialButton">
+                            <WhatsappShareButton title={lyrics} url={shareUrl}>
+                                <WhatsappIcon round size={32} />
+                            </WhatsappShareButton>
+                        </div>
+                        <div className="socialButton">
+                            <EmailShareButton
+                                body={emailBody}
+                                subject={lyrics}
+                                url={shareUrl}
+                            >
+                                <EmailIcon round size={32} />
+                            </EmailShareButton>
+                        </div>
+                    </div>
+                )}
+
                 <div className="imageWrapper">
                     <img src={url} alt="image"></img>
-                    <p className="apply-font">
-                        {lyrics}
-                    </p>
+                    <p className="apply-font">{lyrics}</p>
                 </div>
                 {youtubeVid && (
                     <img className="youtubeArrow" src="./down-arrow.svg"></img>
