@@ -17,6 +17,6 @@ module.exports.getSqlImage = (id) => {
 };
 
 module.exports.getRecent = () => {
-    const q = `SELECT id,artist,lyrics FROM shareify ORDER BY id DESC LIMIT 10`;
+    const q = `SELECT id, artist,lyrics FROM shareify ORDER BY id DESC LIMIT 10`;
     return db.query(q);
 };

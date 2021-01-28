@@ -6,7 +6,7 @@ import secrets from "../../server/secrets.json";
 import { useDispatch } from "react-redux";
 import { renderId } from "./redux/actions";
 import ReactPlayer from "react-player";
-
+import { animateScroll as scroll } from "react-scroll";
 
 import {
     TwitterShareButton,
@@ -70,7 +70,6 @@ export default function Compiler() {
                 let sqlLink = res.data[1].link;
                 // console.log(res.data);
                 updateYoutubeVideos(res.data);
-
                 axios
                     .post("/imageToSql", {
                         url: url,
@@ -84,6 +83,7 @@ export default function Compiler() {
                         dispatch(
                             renderId(url, lyrics, artist, fonts, res.data.id)
                         );
+                        scroll.scrollTo(270);
                         setsqlId(res.data.id);
                         setSending(true);
                         setLoading(false);
@@ -98,21 +98,29 @@ export default function Compiler() {
     return (
         <div>
             <div className="container">
-                <h1>
-                    Awesome, {track} by {artist} is a great pick.
-                </h1>
+                {!sending && (
+                    <h1>
+                        Awesome, {track} by {artist} is a great pick.
+                    </h1>
+                )}{" "}
+                {sending && (
+                    <h1>
+                        Now, share {track} by {artist}!
+                    </h1>
+                )}
                 {!sending && !loading && (
                     <button className="takeItAway" onClick={handleClick}>
-                        share
+                        share and explore!
                     </button>
                 )}
-                
             </div>
+
             <div className="gridContainer">
-                {!sending && (
+                {!sending && !loading && (
                     <p>if you want you can change the font on the image here</p>
                 )}
-                {!sending && (
+                {loading && <img width={"100px"} src="./716.gif"></img>}
+                {!sending && !loading && (
                     <div className="fontPickerContainer">
                         <FontPicker
                             apiKey={secrets.GOOGLE_FONTS_KEY}

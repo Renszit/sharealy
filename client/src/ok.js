@@ -11,17 +11,23 @@ export default function Ok() {
     const [images, setImages] = useState();
 
     useEffect(() => {
+        // {
+        //     artist &&
+        //         axios
+        //             .post("/api/images", {
+        //                 value: artist,
+        //             })
+        //             .then((response) => {
+        //                 // console.log(response);
+        //                 setImages(response.data);
+        //             })
+        //             .catch((err) => console.log("error in useEffect", err));
+        // }
         {
             artist &&
                 axios
-                    .post("/api/images", {
-                        value: artist,
-                    })
-                    .then((response) => {
-                        // console.log(response);
-                        setImages(response.data);
-                    })
-                    .catch((err) => console.log("error in useEffect", err));
+                    .post("/api/images", { value: artist })
+                    .then((result) => setImages(result.data));
         }
     }, [artist]);
 
@@ -42,7 +48,7 @@ export default function Ok() {
 
                     <div className="containerHorizontal">
                         {images &&
-                            images.map((url, idx) => (
+                            images.slice([0], [16]).map((url, idx) => (
                                 <div key={idx} className="singleImage">
                                     <Link
                                         onClick={() => handleImage(url.url)}

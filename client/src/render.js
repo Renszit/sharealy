@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "./axios";
 import ReactPlayer from "react-player";
+import { animateScroll as scroll } from "react-scroll";
 
 export default function Render() {
     let params = useParams();
@@ -20,6 +21,7 @@ export default function Render() {
                     .get("/app/shared/" + params.id)
                     .then((res) => {
                         console.log("response", res);
+                        scroll.scrollTo(200);
                         const {
                             url,
                             track,
@@ -41,7 +43,6 @@ export default function Render() {
                         console.log("getting image in render failed", err)
                     );
         }
-      
     }, [id]);
 
     if (!url || !lyrics || !track || !youtubelink || !artist || !fonts || !id) {
@@ -54,6 +55,7 @@ export default function Render() {
                 <h1>
                     {track} by {artist}
                 </h1>
+
                 <div className="imageWrapper">
                     <a href={youtubelink}>
                         <img

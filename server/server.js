@@ -7,6 +7,7 @@ const csurf = require("csurf");
 const { MM_KEY, RAPID_API } = require("./secrets.json");
 const axios = require("axios");
 const db = require("./db");
+const gis = require("g-i-s");
 
 app.use(
     express.json({
@@ -96,33 +97,48 @@ app.post("/api/artist", (req, res) => {
 });
 
 app.post("/api/images", (req, res) => {
-    var options = {
-        method: "GET",
-        url:
-            "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI",
-        params: {
-            q: req.body.value,
-            pageNumber: "1",
-            pageSize: "19",
-            autoCorrect: "true",
-            safeSearch: "true",
-        },
-        headers: {
-            "x-rapidapi-key": RAPID_API,
-            "x-rapidapi-host":
-                "contextualwebsearch-websearch-v1.p.rapidapi.com",
-        },
-    };
+    // backup:
+    // var options = {
+    //     method: "GET",
+    //     url:
+    //         "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI",
+    //     params: {
+    //         q: req.body.value,
+    //         pageNumber: "1",
+    //         pageSize: "19",
+    //         autoCorrect: "true",
+    //         safeSearch: "true",
+    //     },
+    //     headers: {
+    //         "x-rapidapi-key": RAPID_API,
+    //         "x-rapidapi-host":
+    //             "contextualwebsearch-websearch-v1.p.rapidapi.com",
+    //     },
+    // };
 
-    axios
-        .request(options)
-        .then(function (response) {
-            res.json(response.data.value);
-            // console.log("THIS ONE:",response.data.value);
-        })
-        .catch(function (error) {
-            console.error(error);
-        });
+    // axios
+    //     .request(options)
+    //     .then(function (response) {
+    //         res.json(response.data.value);
+    //         // console.log("THIS ONE:",response.data.value);
+    //     })
+    //     .catch(function (error) {
+    //         console.error(error);
+    //     });
+    ///////
+    var options = {
+        searchTerm: req.body.value + "+" + "music",
+        queryStringAddition: "&safe=active",
+    };
+    gis(options, logResults);
+
+    function logResults(error, results) {
+        if (error) {
+            console.log(error);
+        } else {
+            res.json(results);
+        }
+    }
 });
 
 app.post("/api/song", (req, res) => {
@@ -187,7 +203,7 @@ app.post("/api/youtube", (req, res) => {
     axios
         .request(options)
         .then(function (response) {
-            console.log("data api youtube:",response.data);
+            console.log("data api youtube:", response.data);
             res.json(response.data.items);
         })
         .catch(function (error) {
@@ -196,7 +212,9 @@ app.post("/api/youtube", (req, res) => {
 });
 
 app.get("/db/recent", (req, res) => {
-    db.getRecent().then(({ rows }) => res.json(rows));
+    db.getRecent()
+        .then(({ rows }) => res.json(rows))
+        .catch((err) => console.log("error in getting recent:", err));
 });
 
 app.get("*", function (req, res) {
