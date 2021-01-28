@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import axios from "./axios";
 import FontPicker from "font-picker-react";
-import secrets from "../../server/secrets.json";
 import { useDispatch } from "react-redux";
 import { renderId } from "./redux/actions";
 import ReactPlayer from "react-player";
@@ -123,7 +122,7 @@ export default function Compiler() {
                 {!sending && !loading && (
                     <div className="fontPickerContainer">
                         <FontPicker
-                            apiKey={secrets.GOOGLE_FONTS_KEY}
+                            apiKey="AIzaSyBJ8eiRgZC3FHQ1t6z_oqyaRSysyJ5 - sD0"
                             activeFontFamily={fonts}
                             families="[Abril Fatface, Anton, Bebas Neue,Londrina Solid,Pacifico, Quicksand,Zilla Slab Highlight]"
                             onChange={(nextFont) => setFonts(nextFont.family)}
