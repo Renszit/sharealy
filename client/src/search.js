@@ -68,6 +68,7 @@ export default function Search() {
                                 ))}
                         </div>
                     )}
+
                     <RecentSearches />
                 </div>
             </div>
