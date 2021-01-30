@@ -30,7 +30,6 @@ export default function Compiler() {
     const [sending, setSending] = useState(false);
     const shareUrl = "localhost:3000/shared/" + sqlId;
     const [youtubeVid, setYoutube] = useState();
-    // const ref = useRef();
     const arrowRef = useRef();
     const [loading, setLoading] = useState();
 
