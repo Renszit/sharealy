@@ -28,7 +28,7 @@ export default function Compiler() {
     const dispatch = useDispatch();
     const [sqlId, setsqlId] = useState();
     const [sending, setSending] = useState(false);
-    const shareUrl = "localhost:3000/shared/" + sqlId;
+    const shareUrl = "https://sharealy.herokuapp.com/shared/" + sqlId;
     const [youtubeVid, setYoutube] = useState();
     const arrowRef = useRef();
     const [loading, setLoading] = useState();

@@ -12,7 +12,7 @@ export default function RecentSearches() {
     }, [recent]);
 
     const handleClick = (id) => {
-        const shared = "http://localhost:3000/shared/" + id;
+        const shared = "https://sharealy.herokuapp.com/shared/" + id;
         window.location.href = shared;
     };
 
