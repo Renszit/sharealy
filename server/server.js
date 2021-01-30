@@ -4,7 +4,7 @@ const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
-const { MM_KEY, RAPID_API } = require("./secrets.json");
+// const { MM_KEY, RAPID_API } = require("./secrets.json");
 const axios = require("axios");
 const db = require("./db");
 const gis = require("g-i-s");
@@ -79,7 +79,7 @@ app.post("/api/artist", (req, res) => {
         params: {
             format: "json",
             q_artist: req.body.value,
-            apikey: MM_KEY,
+            apikey: process.env.MM_KEY,
             page_size: 10,
         },
     };
@@ -149,7 +149,7 @@ app.post("/api/song", (req, res) => {
             format: "json",
             q_artist: req.body.name,
             q_track: req.body.value,
-            apikey: MM_KEY,
+            apikey: process.env.MM_KEY,
             page_size: 3,
             s_track_rating: "desc",
             f_has_lyrics: true,
@@ -173,7 +173,7 @@ app.post("/api/lyrics", (req, res) => {
         params: {
             format: "json",
             track_id: req.body.value,
-            apikey: MM_KEY,
+            apikey: process.env.MM_KEY,
         },
     };
     axios
@@ -195,7 +195,7 @@ app.post("/api/youtube", (req, res) => {
         url: "https://youtube-search-results.p.rapidapi.com/youtube-search/",
         params: { q: track + artist },
         headers: {
-            "x-rapidapi-key": RAPID_API,
+            "x-rapidapi-key": process.env.RAPID_API,
             "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
         },
     };
