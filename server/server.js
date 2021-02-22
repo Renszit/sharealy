@@ -58,7 +58,7 @@ app.post("/imageToSql", (req, res) => {
         .catch((err) => console.log("error in posting to sql", err));
 });
 
-app.get("/app/shared/:id", (req, res) => {
+app.get("/shared/:id", (req, res) => {
     console.log("params id:", req.params.id);
     db.getSqlImage(req.params.id)
         .then(({ rows }) => {

@@ -21,7 +21,6 @@ export default function Render() {
                     .get("/app/shared/" + params.id)
                     .then((res) => {
                         console.log("response", res);
-                        scroll.scrollTo(200);
                         const {
                             url,
                             track,
@@ -38,6 +37,7 @@ export default function Render() {
                         setFonts(fonts);
                         setYoutube(youtube);
                         setId(id);
+                        scroll.scrollTo(200);
                     })
                     .catch((err) =>
                         console.log("getting image in render failed", err)
@@ -45,9 +45,9 @@ export default function Render() {
         }
     }, [id]);
 
-    if (!url || !lyrics || !track || !youtubelink || !artist || !fonts || !id) {
-        return null;
-    }
+    // if (!url || !lyrics || !track || !youtubelink || !artist || !fonts || !id) {
+    //     return null;
+    // }
 
     return (
         <div>
