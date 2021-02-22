@@ -12,4 +12,3 @@ CREATE TABLE shareify(
 );
 
 INSERT INTO shareify (url,lyrics,artist,fonts) VALUES ($1,$2,$2);
-

@@ -75,3 +75,16 @@ export default function Render() {
         </div>
     );
 }
+
+
+
+
+
+// The stack - particaler projects at spiced
+// cliump 
+// curiousity is important -> highlight your career change in this
+// highlight the working hours
+// work out more examples about technologies
+// create a master cover letter
+// company values
+// see what people want
