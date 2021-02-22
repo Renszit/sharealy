@@ -8,6 +8,7 @@ import RecentSearches from "./recent";
 
 export default function Search() {
     const dispatch = useDispatch();
+    
     const [search, setSearch] = useState();
     const [result, setResult] = useState();
 

@@ -19,19 +19,22 @@ import {
 } from "react-share";
 
 export default function Compiler() {
+    const dispatch = useDispatch();
+
     const url = useSelector((state) => state.url);
     const trackId = useSelector((state) => state.trackId);
-    const [lyrics, setLyrics] = useState();
-    const [fonts, setFonts] = useState("Poiret One");
     const track = useSelector((state) => state.track);
     const artist = useSelector((state) => state.artist);
-    const dispatch = useDispatch();
+
+    const [lyrics, setLyrics] = useState();
+    const [fonts, setFonts] = useState("Poiret One");
     const [sqlId, setsqlId] = useState();
     const [sending, setSending] = useState(false);
-    const shareUrl = "https://sharealy.herokuapp.com/shared/" + sqlId;
     const [youtubeVid, setYoutube] = useState();
-    const arrowRef = useRef();
     const [loading, setLoading] = useState();
+
+    const shareUrl = "https://sharealy.herokuapp.com/shared/" + sqlId;
+    const arrowRef = useRef();
 
     const updateYoutubeVideos = (array) => {
         for (let i = 0; i < array.length; i++) {

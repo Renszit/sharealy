@@ -4,10 +4,16 @@ const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
-// const { MM_KEY, RAPID_API } = require("./secrets.json");
 const axios = require("axios");
 const db = require("./db");
 const gis = require("g-i-s");
+
+let secrets;
+if (process.env.NODE_ENV == "production") {
+    secrets = process.env;
+} else {
+    secrets = require("./secrets"); // in dev they are in secrets.json which is listed in .gitignore
+}
 
 app.use(
     express.json({
@@ -79,7 +85,7 @@ app.post("/api/artist", (req, res) => {
         params: {
             format: "json",
             q_artist: req.body.value,
-            apikey: process.env.MM_KEY,
+            apikey: secrets.MM_KEY,
             page_size: 10,
         },
     };
@@ -97,35 +103,6 @@ app.post("/api/artist", (req, res) => {
 });
 
 app.post("/api/images", (req, res) => {
-    // backup:
-    // var options = {
-    //     method: "GET",
-    //     url:
-    //         "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI",
-    //     params: {
-    //         q: req.body.value,
-    //         pageNumber: "1",
-    //         pageSize: "19",
-    //         autoCorrect: "true",
-    //         safeSearch: "true",
-    //     },
-    //     headers: {
-    //         "x-rapidapi-key": RAPID_API,
-    //         "x-rapidapi-host":
-    //             "contextualwebsearch-websearch-v1.p.rapidapi.com",
-    //     },
-    // };
-
-    // axios
-    //     .request(options)
-    //     .then(function (response) {
-    //         res.json(response.data.value);
-    //         // console.log("THIS ONE:",response.data.value);
-    //     })
-    //     .catch(function (error) {
-    //         console.error(error);
-    //     });
-    ///////
     var options = {
         searchTerm: req.body.value + "+" + "music",
         queryStringAddition: "&safe=active",
@@ -149,7 +126,7 @@ app.post("/api/song", (req, res) => {
             format: "json",
             q_artist: req.body.name,
             q_track: req.body.value,
-            apikey: process.env.MM_KEY,
+            apikey: secrets.MM_KEY,
             page_size: 3,
             s_track_rating: "desc",
             f_has_lyrics: true,
@@ -173,7 +150,7 @@ app.post("/api/lyrics", (req, res) => {
         params: {
             format: "json",
             track_id: req.body.value,
-            apikey: process.env.MM_KEY,
+            apikey: secrets.MM_KEY,
         },
     };
     axios
@@ -195,7 +172,7 @@ app.post("/api/youtube", (req, res) => {
         url: "https://youtube-search-results.p.rapidapi.com/youtube-search/",
         params: { q: track + artist },
         headers: {
-            "x-rapidapi-key": process.env.RAPID_API,
+            "x-rapidapi-key": secrets.RAPID_API,
             "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
         },
     };

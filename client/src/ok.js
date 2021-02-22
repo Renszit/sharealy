@@ -11,18 +11,6 @@ export default function Ok() {
     const [images, setImages] = useState();
 
     useEffect(() => {
-        // {
-        //     artist &&
-        //         axios
-        //             .post("/api/images", {
-        //                 value: artist,
-        //             })
-        //             .then((response) => {
-        //                 // console.log(response);
-        //                 setImages(response.data);
-        //             })
-        //             .catch((err) => console.log("error in useEffect", err));
-        // }
         {
             artist &&
                 axios
